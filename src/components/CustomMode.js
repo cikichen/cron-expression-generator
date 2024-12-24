@@ -4,6 +4,7 @@ import parser from 'cron-parser';
 const CustomMode = ({ setCronExpression }) => {
     const [customCron, setCustomCron] = useState('* * * * *');
     const [isValid, setIsValid] = useState(true);
+    const [previewTimes, setPreviewTimes] = useState([]);
 
     const validateCronExpression = (cron) => {
         try {
@@ -17,8 +18,23 @@ const CustomMode = ({ setCronExpression }) => {
     useEffect(() => {
         const isValidCron = validateCronExpression(customCron);
         setIsValid(isValidCron);
+
         if (isValidCron) {
             setCronExpression(customCron);
+
+            // 计算预览时间
+            try {
+                const interval = parser.parseExpression(customCron);
+                const nextDates = [];
+                for (let i = 0; i < 10; i++) {
+                    nextDates.push(interval.next().toDate());
+                }
+                setPreviewTimes(nextDates);
+            } catch (err) {
+                setPreviewTimes([]);
+            }
+        } else {
+            setPreviewTimes([]);
         }
     }, [customCron]);
 
@@ -41,6 +57,27 @@ const CustomMode = ({ setCronExpression }) => {
             {!isValid && (
                 <div className="text-red-500 text-sm">
                     无效的Cron表达式
+                </div>
+            )}
+
+            {isValid && previewTimes.length > 0 && (
+                <div className="bg-gray-50 p-4 rounded-md">
+                    <h4 className="font-bold text-lg mb-3">最近10次执行时间预览：</h4>
+                    <div className="space-y-1 font-mono text-sm">
+                        {previewTimes.map((time, index) => (
+                            <div key={index} className="bg-white border rounded p-2">
+                                {time.toLocaleString('zh-CN', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit',
+                                    hour12: false
+                                })}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
 

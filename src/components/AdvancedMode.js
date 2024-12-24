@@ -202,33 +202,33 @@ const AdvancedMode = ({ setCronExpression }) => {
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="font-bold text-lg mb-4">每周执行的星期几</h3>
-                <div className="flex flex-wrap gap-4">
-                    {weekDays.map(day => (
-                        <label
-                            key={day.value}
-                            className="flex items-center space-x-2 bg-gray-50 p-2 rounded-md border border-gray-300 hover:bg-gray-100 cursor-pointer"
-                        >
-                            <input
-                                type="checkbox"
-                                checked={selectedWeekDays.includes(day.value)}
-                                onChange={() => {
-                                    setSelectedWeekDays(prev => {
-                                        if (prev.includes(day.value)) {
-                                            return prev.filter(d => d !== day.value);
-                                        } else {
-                                            return [...prev, day.value];
-                                        }
-                                    });
-                                    clearIntervals();
-                                }}
-                                className="rounded"
-                            />
-                            <span className="whitespace-nowrap">{day.label}</span>
-                        </label>
-                    ))}
-                </div>
-            </div>
+    <h3 className="font-bold text-lg mb-4">每周执行的星期几</h3>
+    <div className="flex flex-wrap gap-4">
+        {weekDays.map(day => (
+            <label
+                key={day.value}
+                className="flex items-center space-x-2 bg-gray-50 p-2 rounded-md border border-gray-300 hover:bg-gray-100 cursor-pointer"
+            >
+                <input
+                    type="checkbox"
+                    checked={selectedWeekDays.includes(day.value)}
+                    onChange={() => {
+                        setSelectedWeekDays(prev => {
+                            if (prev.includes(day.value)) {
+                                return prev.filter(d => d !== day.value);
+                            } else {
+                                return [...prev, day.value];
+                            }
+                        });
+                        clearIntervals();
+                    }}
+                    className="rounded"
+                />
+                <span className="whitespace-nowrap">{day.label}</span>
+            </label>
+        ))}
+    </div>
+</div>
 
 
             <div className="bg-white p-4 rounded-lg shadow">

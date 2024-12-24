@@ -83,7 +83,7 @@ const CronGenerator = () => {
                         <CodeBlock language="java" code={cronExpression} />
                     </div>
                 </div>
-
+                {activeTab !== 'custom' && (
                 <div className="bg-gray-50 p-4 rounded-md">
                     <h4 className="font-bold text-lg mb-3">最近10次执行时间预览：</h4>
                     <div className="space-y-1 font-mono text-sm">
@@ -101,7 +101,8 @@ const CronGenerator = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     );
